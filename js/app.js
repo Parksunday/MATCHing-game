@@ -15,6 +15,8 @@ shuffle(cardlist);
 var currentstar=3;
 var list=[];
 var result=0;
+var starttime = Date.now();
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -64,6 +66,8 @@ function reset(){
     $(".star1").show("star1");
     $(".star2").show("star2");
     $(".star3").show("star3");
+    list=[];
+
 }
 
 function checkstar(){
@@ -74,14 +78,12 @@ currentstar-=1;
 }
 
 function checkresult(){
-    if(result==1){
-        alert("WIN");
-    }
-    if(currentstar==0){
-        alert("LOSE")
-        setTimeout(function(){
-                reset();
-                },3000); 
+    if(result==8){
+         setTimeout(function(){
+                 alert("YOU WIN!"+"Time used = "+timecount()+"S");
+                },1000); 
+       
+        console.log(timecount());
 
     }
 }
@@ -114,8 +116,16 @@ function run(){
         $('.deck').append($('<li class="card"><i class="fa fa-' + cardlist[i] + '"></i></li>'))
     }
     var run= selectcard();
+     currentstar=3;
 }
+
+
 run();
+timecount();
+$('.restart').on('click',function(){
+   reset();
+});
+
 
 function showandclose(){
      $('.card').addClass('open');
@@ -126,6 +136,13 @@ function showandclose(){
         $('selector').click(true);
 
     },3000)
+}
+
+function timecount(){
+    var endtime = Date.now();
+    var totaltime= ((endtime-starttime)/60)/60;
+    return Math.floor(totaltime);
+
 }
 
 
