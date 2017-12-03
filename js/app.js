@@ -10,7 +10,6 @@ var cardlist =["diamond","paper-plane-o","anchor","bolt","cube","leaf","bicycle"
  *   - add each card's HTML to the page
  */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
 
 var currentstar=3;
 var list=[];
@@ -22,6 +21,7 @@ var wrong_attemp =0;
 
 
 
+// Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -36,8 +36,10 @@ function shuffle(array) {
     return array
 }
 
+//recevice  card class name and put it in the array after receiving 2 cards name, caompare the first card name and second card name to see whether they are matched or not
+
 function addcardtolist(card1){
-    
+       $('.card').on('click',function(){});
        list.push(card1);
        if(list.length==2){
         if(list[0]===list[1]){
@@ -67,7 +69,8 @@ function addcardtolist(card1){
         }
          
        }
-       
+
+// reset the star and time  run the game again  
 function reset(){
     run();
     $(".star1").show("star1");
@@ -79,6 +82,8 @@ function reset(){
 
 }
 
+// if the user pick a wrong match 3 times 
+// remove the star by one
 function checkstar(){
     if (wrong_attemp==3){
         var selectstar = "star"+currentstar
@@ -88,12 +93,13 @@ function checkstar(){
         }
 }
 
+// check if the user win the game or not if the user win display the banner 
 function checkresult(){
     if(result==8){
          setTimeout(function(){
                  $(".modal-content").css("display","block");
                  $(".modal").css("display","block");
-                 $(".modal-content").append($('<p class="showresult">YOU WIN ! TOTAL TIME ='+timecount()+" "+"second"+'</p>'));
+                 $(".modal-content").append($('<p class="showresult">YOU WIN ! TOTAL TIME = '+timecount()+" "+"seconds"+'</p>'));
                   $(".modal-content").append($('<p class="showresult">totalstar='+currentstar+'</p>'));
                  result=0;
                 },1000);
@@ -103,21 +109,25 @@ function checkresult(){
             
     }
 }
+
+// reset the card to close 
 function resetcard(){
         $('.card').removeClass('open');
         $('.card').removeClass('show')
 
 }
 
+// set unmatch scenario for card 
 function wrongcard(list1,list2){
     $('.show').addClass('unmatch');
     setTimeout(function(){
-        $('.show').removeClass('unmatch');
+        $('.card').removeClass('unmatch');
     },1000);
     //$('.card').removeClass('open');
     
 }
 
+// trigger when user click on the cards recevie the card class name and pass it to the list 
 function selectcard(){
      showandclose();
     $('.card').on('click',function(){
@@ -125,7 +135,6 @@ function selectcard(){
     // * Display the cards on the page
      $(this).addClass('open');
      $(this).addClass('show');
-
      var x=$(this);
      var x1 =x.find('i');
      var x2 =x1.attr('class');
@@ -134,6 +143,7 @@ function selectcard(){
     });  
 }
 
+//main function to run the program 
 function run(){
 
     shuffle(cardlist);
@@ -151,12 +161,11 @@ function run(){
 
 run();
 
-
 $('.restart').on('click',function(){
         reset();
 });
 
-    
+// show the card at the beginning of the game 
 function showandclose(){
      $('.card').addClass('open');
      $('.card').addClass('show');
@@ -168,6 +177,7 @@ function showandclose(){
     },3000)
 }
 
+//calculate time taken to finish 
 function timecount(){
     var endtime = Date.now();
     var totaltime= ((endtime-starttime)/1000);
@@ -175,6 +185,7 @@ function timecount(){
 
 }
 
+//reset the banner 
 span.onclick = function() {
             modal.style.display = "none";
             reset();
@@ -200,9 +211,3 @@ span.onclick = function() {
 
 // Get the <span> element that closes the modal
 
-
-// When the user clicks on the button, open the modal 
-// When the user clicks on <span> (x), close the modal
-
-
-// When the user clicks anywhere outside of the modal, close it
